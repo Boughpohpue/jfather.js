@@ -41,31 +41,28 @@ const paths = [
   'user.address.coordinates.lat'
 ];
 
-console.log("JSON object under test:");
-console.log(JSON.stringify(complexJson));
-console.log("\n\nPaths to extract from JSON object:");
-console.log(JSON.stringify(complexJson));
+console.warn("JSON object under test:");
+console.log(JSON.stringify(complexJson, null, 3));
 
-console.log("\n\nTesting...");
+console.warn("\n\nPaths to extract from JSON object:");
+console.log(JSON.stringify(complexJson, null, 3));
 
-const pickedData = JFATHER.parse(complexJson, paths);
-console.log("\n\nPicked Data:");
-console.log(pickedData);
+console.warn("\n\nTesting...");
 
-const prettyStringified = JFATHER.stringify(complexJson, paths, true);
-console.log("\n\nPretty Stringified JSON:");
-console.log(prettyStringified);
+console.warn("\n\nPicked Data:");
+console.log(JFATHER.parse(complexJson, paths));
 
-const compactStringified = JFATHER.stringify(complexJson, paths, false);
-console.log("\n\nCompact Stringified JSON:");
-console.log(compactStringified);
+console.warn("\n\nPretty Stringified JSON:");
+console.log(JFATHER.stringify(complexJson, paths, true));
 
-console.log("\n\nHandling invalid data...");
+console.warn("\n\nCompact Stringified JSON:");
+console.log(JFATHER.stringify(complexJson, paths, false));
+
+console.warn("\n\nHandling invalid data...");
 try {
   const invalidPaths = ['user.invalidPath', 'user.address.zipcode'];
-  const invalidData = JFATHER.parse(complexJson, invalidPaths);
-  console.log("\nInvalid Data:");
-  console.log(invalidData);
+  console.warn("\nInvalid Data:");
+  console.log(JFATHER.parse(complexJson, invalidPaths));
 } catch (error) {
   console.error("\nError encountered:");
   console.log(error.message);
