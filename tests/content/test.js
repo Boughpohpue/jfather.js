@@ -1,5 +1,5 @@
-import { JFATHER } from '../content/jfather.js';
-import { codeStyleMap, complexJson, paths, invalidPaths, mixedPaths } from './test_data.js';
+import { JFATHER } from '../../content/jfather.js';
+import { codeStyleMap, complexJson, paths, invalidPaths, mixedPaths } from '../data/test_data.js';
 
 const resultStyleMap = new Map([["breaklines", true]]);
 

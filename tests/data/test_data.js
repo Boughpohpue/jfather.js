@@ -57,8 +57,11 @@ console.log("const invalidPaths = %O;", invalidPaths, codeStyleMap);
 console.warn("\n\nMixed (valid&invalid) paths:\n");
 export const mixedPaths = [
   'user.name',
+  'user.posts[].id',
   'user.invalidPath',
   'user.address.city',
-  'user.address.zipcode'
+  'user.address.zipcode',
+  'user.posts[].tags',
+  'user.preferences.notify'
 ];
 console.log("const mixedPaths = %O;", mixedPaths, codeStyleMap);
