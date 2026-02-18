@@ -1,71 +1,33 @@
 import { JFATHER } from '../compiled/jfather.js-1.0.1.js';
+import { codeStyleMap, complexJson, paths, invalidPaths, mixedPaths } from './test_data.js';
 
-const complexJson = {
-  "user": {
-    "id": 123,
-    "name": "John Doe",
-    "address": {
-      "street": "123 Main St",
-      "city": "Metropolis",
-      "zip": "12345",
-      "coordinates": {
-        "lat": 40.7128,
-        "lon": -74.0060
-      }
-    },
-    "posts": [
-      {
-        "id": 1,
-        "title": "My first post",
-        "content": "Hello, world!",
-        "tags": ["intro", "beginner"]
-      },
-      {
-        "id": 2,
-        "title": "Another post",
-        "content": "Just testing.",
-        "tags": ["testing", "dev"]
-      }
-    ],
-    "preferences": {
-      "notifications": true,
-      "theme": "dark"
-    }
-  }
-};
+const resultStyleMap = new Map([["breaklines", true]]);
 
-const paths = [
-  'user.name',
-  'user.address.city',
-  'user.posts[].title',
-  'user.address.coordinates.lat'
-];
+console.info("\n\n\nStarting test...");
 
+console.warn("\n\nPicking data from object:\n");
+const pickedData = JFATHER.parse(complexJson, paths);
+console.log("JFATHER.parse(complexJson, paths);", codeStyleMap);
+console.log(pickedData, resultStyleMap);
 
-console.warn("JSON object under test:");
-console.log(JSON.stringify(complexJson, null, 3));
+console.warn("\n\nPicking data as JSON string:\n");
+const pickedDataStr = JFATHER.stringify(complexJson, paths, false);
+console.log("JFATHER.stringify(complexJson, paths, false);", codeStyleMap);
+console.log(pickedDataStr, resultStyleMap);
 
-console.warn("\n\nPaths to extract from JSON object:");
-console.log(JSON.stringify(paths, null, 3));
+console.warn("\n\nPicking data as JSON pretty string:\n");
+const pickedDataStrPrty = JFATHER.stringify(complexJson, paths, true);
+console.log("JFATHER.stringify(complexJson, paths, true);", codeStyleMap);
+console.log(pickedDataStrPrty, resultStyleMap);
 
-console.warn("\n\n\nTesting...");
+console.warn("\n\nPicking data for invalid paths:\n");
+const invalidPathsData = JFATHER.stringify(complexJson, invalidPaths, true);
+console.log("JFATHER.stringify(complexJson, invalidPaths, true);", codeStyleMap);
+console.log(invalidPathsData, resultStyleMap);
 
-console.warn("\n\nPicked Data:");
-console.log(JFATHER.parse(complexJson, paths));
+console.warn("\n\nPicking data for mixed paths (valid&invalid):\n");
+const mixedPathsData = JFATHER.stringify(complexJson, mixedPaths, true);
+console.log("JFATHER.stringify(complexJson, mixedPaths, true);", codeStyleMap);
+console.log(mixedPathsData, resultStyleMap);
 
-console.warn("\n\nCompact Stringified JSON:");
-console.log(JFATHER.stringify(complexJson, paths, false));
-
-console.warn("\n\nPretty Stringified JSON:");
-console.log(JFATHER.stringify(complexJson, paths, true));
-
-console.warn("\n\nInvalid paths:");
-try {
-  const invalidPaths = ['user.invalidPath', 'user.address.zipcode'];
-  console.log(JSON.stringify(invalidPaths, null, 3));
-  console.warn("\n\nPicked data:");
-  console.log(JFATHER.parse(complexJson, invalidPaths));
-} catch (error) {
-  console.error("\nError encountered:");
-  console.log(error.message);
-}
+console.info("\n\nTest complete!");
